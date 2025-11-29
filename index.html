@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalkulator PNG MRSM (Upperform)</title>
+<style>
+    body {
+    background: 
+        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+        url("bg.JPG");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    
+        
+        text-align: center;
+        font-family: Arial, sans-serif;
+        color: white;
+    }
+    h1 {
+        margin-bottom: 5px;
+    }
+    .section {
+        margin: 15px 0;
+    }
+    label {
+        display: block;
+        margin: 8px 0 3px 0;
+        font-weight: normal;
+    }
+    input[type="text"], input[type="number"] {
+        padding: 5px;
+        width: 120px;
+        text-align: center;
+        font-size: 16px;
+    }
+    button {
+        padding: 8px 16px;
+        font-size: 16px;
+        margin-top: 15px;
+        cursor: pointer;
+    }
+</style>
+<script>
+function calculatePNG(isFormative) {
+    let nama = document.getElementById("nama").value;
+
+    let melayu = parseFloat(document.getElementById("melayu").value);
+    let inggeris = parseFloat(document.getElementById("inggeris").value);
+    let math = parseFloat(document.getElementById("math").value);
+    let addmath = parseFloat(document.getElementById("addmath").value);
+    let phy = parseFloat(document.getElementById("phy").value);
+    let chem = parseFloat(document.getElementById("chem").value);
+    let bio = parseFloat(document.getElementById("bio").value);
+    let sej = parseFloat(document.getElementById("sej").value);
+    let islam = parseFloat(document.getElementById("islam").value);
+    let pj = isFormative ? null : parseFloat(document.getElementById("pj").value);
+
+    function gradeBM(score){if(score>=85)return 4;if(score>=80)return 3.67;if(score>=75)return 3.33;if(score>=70)return 3;if(score>=65)return 2.67;if(score>=60)return 2.33;if(score>=55)return 2;if(score>=50)return 1.67;if(score>=45)return 1.33;if(score>=40)return 1;return 0;}
+    function gradeBI(score){if(score>=80)return 4;if(score>=75)return 3.67;if(score>=70)return 3.33;if(score>=65)return 3;if(score>=60)return 2.67;if(score>=55)return 2.33;if(score>=50)return 2;if(score>=45)return 1.67;if(score>=40)return 1.33;if(score>=35)return 1;return 0;}
+    function gradeMath(score){return gradeBI(score);}
+    function gradeAddMath(score){if(score>=75)return 4;if(score>=65)return 3.67;if(score>=60)return 3.33;if(score>=55)return 3;if(score>=50)return 2.67;if(score>=45)return 2.33;if(score>=40)return 2;if(score>=35)return 1.67;if(score>=30)return 1.33;if(score>=25)return 1;return 0;}
+    function gradePhy(score){if(score>=75)return 4;if(score>=70)return 3.67;if(score>=65)return 3.33;if(score>=60)return 3;if(score>=55)return 2.67;if(score>=50)return 2.33;if(score>=45)return 2;if(score>=40)return 1.67;if(score>=35)return 1.33;if(score>=30)return 1;return 0;}
+    function gradeChem(score){return gradePhy(score);}
+    function gradeBio(score){return gradePhy(score);}
+    function gradeSej(score){if(score>=85)return 4;if(score>=80)return 3.67;if(score>=75)return 3.33;if(score>=70)return 3;if(score>=65)return 2.67;if(score>=60)return 2.33;if(score>=55)return 2;if(score>=50)return 1.67;if(score>=45)return 1.33;if(score>=40)return 1;return 0;}
+    function gradeIslam(score){return gradeSej(score);}
+    function gradePJ(score){return gradeSej(score);}
+
+    let Bm = gradeBM(melayu)*6;
+    let Bi = gradeBI(inggeris)*6;
+    let Mt = gradeMath(math)*6;
+    let Admt = gradeAddMath(addmath)*6;
+    let Sic = gradePhy(phy)*6;
+    let Kim = gradeChem(chem)*6;
+    let Gy = gradeBio(bio)*6;
+    let Sj = gradeSej(sej)*4;
+    let Pi = gradeIslam(islam)*5;
+    let Pe = isFormative ? 0 : gradePJ(pj)*2;
+
+    let total = Bm+Bi+Mt+Admt+Sic+Kim+Gy+Sj+Pi+Pe;
+    let purata = isFormative ? total/51 : total/53;
+
+    document.getElementById("result").innerHTML = "PNG anda ialah: " + purata.toFixed(3);
+
+    let message = "";
+    if(purata===4){message="Tahniah "+nama+"!, Anda mendapat pointer 4.00. Kekalkan prestasi anda.";}
+    else if(purata>=3.50){message="Tahniah "+nama+"!, Teruskan usaha anda.";}
+    else if(purata>=3){message="Anda sudah lakukan yang terbaik, "+nama+"! Cuba Lagi dalam ujian seterusnya.";}
+    else{message="Jangan putus asa, "+nama+". Teruskan berusaha dengan lebih gigih.";}
+    document.getElementById("message").innerHTML = message;
+}
+</script>
+</head>
+<body>
+    <h1><img src="MARA.png" style="width:33px;height:33px;">    Kalkulator PNG    <img src="MRSM.png" style="width:38px;height:33px;"></h1>
+    <h3>Upperform Student</h3>
+    <br>
+    <p>Sila tulis mengikut ejaan yang betul dan tepat❗</p>
+    
+<div class="section">
+<label>Jenis ujian</label>
+    <input type="radio" id="formative-no" name="formative" value="Tidak" checked onclick="toggleExtraFields(false)"> Ujian Formatif
+    <input type="radio" id="formative-yes" name="formative" value="Ya" onclick="toggleExtraFields(true)"> Ujian Semester
+</div>
+
+<div class="section">
+    <span>Sila masukkan nama anda:</span>
+  <input type="text" id="nama" style="height:12px;">
+</div>
+    
+
+<div class="section">
+    <label for="melayu">Bahasa Melayu📚</label>
+    <input type="number" id="melayu"style="height:12px;">
+    <label for="inggeris">English📖</label>
+    <input type="number" id="inggeris" style="height:12px;">
+    <label for="islam">Pendidikan Islam🕌</label>
+    <input type="number" id="islam" style="height:12px;">
+    <label for="sej">Sejarah📜</label>
+    <input type="number" id="sej" style="height:12px;">
+    <label for="math">Matematik🧮</label>
+    <input type="number" id="math" style="height:12px;">
+    <label for="addmath">Matematik Tambahan🧮</label>
+    <input type="number" id="addmath" style="height:12px;">
+    <label for="phy">Fizik🔭</label>
+    <input type="number" id="phy" style="height:12px;">
+    <label for="chem">Kimia🧪</label>
+    <input type="number" id="chem" style="height:12px;">
+    <label for="bio">Biologi🧬/Prinsip Perakaunan💵</label>
+    <input type="number" id="bio" style="height:12px; width:250px">
+
+    <div id="extra-fields" style="display:none;">
+        <label for="pj">Pendidikan Jasmani⚽️</label>
+        <input type="number" id="pj" style="height:12px;">
+    </div>
+</div>
+
+<br>
+<button onclick="calculatePNG(document.getElementById('formative-no').checked)">Kira PNG🔎</button>
+
+<center>
+ <ul><p><small><small>'MRSM Tepen'product<br>Waldann & Adlann</small></small></p></ul>
+ <h3>Keputusan:</h3>
+ <p id="result"></p>
+ <p id="message"></p>
+</center>
+
+<script>
+        function toggleExtraFields(show) {
+            document.getElementById('extra-fields').style.display = show ? 'block' : 'none';
+        }
+        
+        // Limit semua input number ke 0–100 & block huruf
+document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.addEventListener('input', () => {
+        // remove non-digit characters
+        input.value = input.value.replace(/[^0-9]/g, '');
+        // limit value
+        if(input.value > 100) input.value = 100;
+        if(input.value < 0) input.value = 0;
+    });
+});
+</script>
+</body>
+</html>
